@@ -39,7 +39,7 @@ npm run build
 ---
 
 ## 📁 Project Structure
-
+```bash
 .
 ├── electron/                # Electron main process code
 │   └── main.js
@@ -53,7 +53,7 @@ npm run build
 │       └── bg.jpg           # Background image
 ├── package.json             # Project metadata and dependencies
 └── README.md                # Project documentation
-
+```
 ___
 
 ## 🧩 Tech Stack
