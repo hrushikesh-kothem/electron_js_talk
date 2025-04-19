@@ -1,4 +1,9 @@
-const { ipcRenderer } = require("electron");
+let ipcRenderer;
+
+if (isElectron()) {
+  const { ipcRenderer: _ipcRenderer } = require("electron");
+  ipcRenderer = _ipcRenderer;
+}
 
 const cells = document.querySelectorAll("[data-cell]");
 const statusText = document.getElementById("statusText");
@@ -69,7 +74,7 @@ function checkWin() {
   if (winner) {
     const time = new Date().toLocaleString();
     const message = `[${time} : ${currentPlayer} won the game]\n`;
-    ipcRenderer.send("save-score", message);
+    isElectron() && ipcRenderer.send("save-score", message);
     winSound.play();
     triggerCelebration();
   }
@@ -109,6 +114,14 @@ function highlightWinningCells(combination) {
     cell.classList.add("bounce");
     cell.style.animation = "bounce 2s ease infinite";
   });
+}
+
+function isElectron() {
+  return (
+    typeof window !== "undefined" &&
+    typeof window.process === "object" &&
+    window.process.type === "renderer"
+  );
 }
 
 restartBtn.addEventListener("click", startGame);
